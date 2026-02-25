@@ -13,7 +13,7 @@ class MenuViewTests(APITestCase):
         Menu.objects.create(title="Pasta", price=12, inventory=3)
 
     def test_get_all_menu_items(self):
-        url = "/restaurant/menu/items"
+        url = "/restaurant/menu/items/"
         response = self.client.get(url)
 
         items = Menu.objects.all()
@@ -23,7 +23,7 @@ class MenuViewTests(APITestCase):
         self.assertEqual(response.data, serializer.data)
 
     def test_create_menu_item(self):
-        url = "/restaurant/menu/items"
+        url = "/restaurant/menu/items/"
         data = {"title": "Soup", "price": 5, "inventory": 10}
 
         response = self.client.post(url, data)
@@ -35,7 +35,7 @@ class MenuViewTests(APITestCase):
     def test_get_all(self):
         items = Menu.objects.all()
         serialized_items = MenuSerializer(items, many=True)
-        response = self.client.get('/restaurant/menu/items')
+        response = self.client.get('/restaurant/menu/items/')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data, serialized_items.data)
@@ -47,7 +47,7 @@ class SingleMenuItemTests(APITestCase):
         self.item = Menu.objects.create(title="Burger", price=8, inventory=4)
 
     def test_get_single_item(self):
-        url = f"/restaurant/menu/items/{self.item.id}"
+        url = f"/restaurant/menu/items/{self.item.id}/"
         response = self.client.get(url)
 
         serializer = MenuSerializer(self.item)
@@ -56,7 +56,7 @@ class SingleMenuItemTests(APITestCase):
         self.assertEqual(response.data, serializer.data)
 
     def test_update_item(self):
-        url = f"/restaurant/menu/items/{self.item.id}"
+        url = f"/restaurant/menu/items/{self.item.id}/"
         data = {"title": "Updated Burger", "price": 9, "inventory": 2}
 
         response = self.client.put(url, data)
@@ -66,7 +66,7 @@ class SingleMenuItemTests(APITestCase):
         self.assertEqual(self.item.title, "Updated Burger")
 
     def test_delete_item(self):
-        url = f"/restaurant/menu/items/{self.item.id}"
+        url = f"/restaurant/menu/items/{self.item.id}/"
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
@@ -83,13 +83,13 @@ class BookingViewSetTests(APITestCase):
         Booking.objects.create(name="John", no_of_guests=2, booking_date="2024-01-01")
 
     def test_get_bookings(self):
-        url = "/restaurant/booking/tables"
+        url = "/restaurant/booking/tables/"
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_booking(self):
-        url = "/restaurant/booking/tables"
+        url = "/restaurant/booking/tables/"
         data = {"name": "Anna", "no_of_guests": 4, "booking_date": "2024-02-01"}
 
         response = self.client.post(url, data)
